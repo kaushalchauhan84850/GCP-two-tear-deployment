@@ -13,7 +13,7 @@ services:
       - backend_net
 
   backend:
-    image: ${kaushalchauhan84850}/student-backend:${IMAGE_TAG:-latest}
+    image: ${DOCKERHUB_USERNAME}/student-backend:${IMAGE_TAG:-latest}
     container_name: backend
     restart: always
     depends_on:
