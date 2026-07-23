@@ -20,7 +20,7 @@ services:
       - mongo
     environment:
       - PORT=5000
-      - MONGO_URI=mongodb://mongo:27017/studentdb
+      - MONGO_URI=mongodb+srv://karannew_1:KSNZgyseaOqUAaq4@cluster1.35jytu3.mongodb.net/?appName=Cluster1
       - APP_ENV=${APP_ENV:-dev}
     ports:
       - "5000:5000"
