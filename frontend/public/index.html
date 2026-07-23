@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Student Details Form</title>
+<style>
+  body { font-family: Arial, sans-serif; background: #f4f6f8; margin: 0; padding: 40px; }
+  .card { max-width: 480px; margin: 0 auto; background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+  h2 { text-align: center; color: #333; }
+  label { display: block; margin-top: 14px; font-weight: bold; color: #555; }
+  input, select { width: 100%; padding: 8px; margin-top: 4px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+  button { margin-top: 20px; width: 100%; padding: 10px; background: #2563eb; color: #fff; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; }
+  button:hover { background: #1d4ed8; }
+  #msg { margin-top: 15px; text-align: center; font-weight: bold; }
+</style>
+</head>
+<body>
+<div class="card">
+  <h2>Student Details Form</h2>
+  <form id="studentForm">
+    <label>Name</label>
+    <input type="text" name="name" required />
+    <label>Roll Number</label>
+    <input type="text" name="rollNumber" required />
+    <label>Email</label>
+    <input type="email" name="email" required />
+    <label>Course</label>
+    <input type="text" name="course" required />
+    <label>Phone</label>
+    <input type="text" name="phone" />
+    <button type="submit">Submit</button>
+  </form>
+  <div id="msg"></div>
+</div>
+
+<script>
+document.getElementById('studentForm').addEventListener('submit', async function (e) {
+  e.preventDefault();
+  const data = Object.fromEntries(new FormData(e.target).entries());
+  const msg = document.getElementById('msg');
+  try {
+    const res = await fetch('/api/students', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    if (res.ok) {
+      msg.style.color = 'green';
+      msg.textContent = 'Student details saved successfully!';
+      e.target.reset();
+    } else {
+      msg.style.color = 'red';
+      msg.textContent = 'Failed to save details.';
+    }
+  } catch (err) {
+    msg.style.color = 'red';
+    msg.textContent = 'Error contacting server.';
+  }
+});
+</script>
+</body>
+</html>

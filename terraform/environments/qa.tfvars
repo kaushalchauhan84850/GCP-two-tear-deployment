@@ -1,0 +1,7 @@
+project_id          = "qa-infra-500307"
+environment         = "qa"
+region              = "asia-south1"
+zone                = "asia-south1-a"
+machine_type        = "e2-small"
+dockerhub_username  = "REPLACE_WITH_YOUR_DOCKERHUB_USERNAME"
+image_tag           = "qa"

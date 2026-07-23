@@ -1,0 +1,7 @@
+project_id          = "dev-infra-503304"
+environment         = "dev"
+region              = "asia-south1"
+zone                = "asia-south1-a"
+machine_type        = "e2-small"
+dockerhub_username  = "kaushalchauhan84850"
+image_tag           = "dev"

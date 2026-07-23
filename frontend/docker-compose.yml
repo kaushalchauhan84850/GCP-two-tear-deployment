@@ -1,0 +1,14 @@
+version: "3.8"
+
+services:
+  frontend:
+    image: ${kaushalchauhan84850}/student-frontend:${IMAGE_TAG:-latest}
+    container_name: frontend
+    restart: always
+    environment:
+      - PORT=3000
+      # This gets set to the backend VM's internal IP at deploy time
+      - BACKEND_URL=${BACKEND_URL}
+      - APP_ENV=${APP_ENV:-dev}
+    ports:
+      - "80:3000"

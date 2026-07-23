@@ -1,0 +1,7 @@
+project_id          = "prod-infra-503304"
+environment         = "prod"
+region              = "asia-south1"
+zone                = "asia-south1-a"
+machine_type        = "e2-medium"
+dockerhub_username  = "REPLACE_WITH_YOUR_DOCKERHUB_USERNAME"
+image_tag           = "prod"
