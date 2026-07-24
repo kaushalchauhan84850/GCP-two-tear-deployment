@@ -8,9 +8,14 @@ app.use(cors());
 app.use(express.json());
 
 const PORT = process.env.PORT || 5000;
-// When running via docker-compose, MONGO_URI should point to the mongo
-// service name, e.g. mongodb://mongo:27017/studentdb
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://mongo:27017/studentdb';
+// Set MONGO_URI to your MongoDB Atlas (or other managed Mongo) connection string,
+// e.g. mongodb+srv://user:pass@yourcluster.mongodb.net/studentdb
+const MONGO_URI = process.env.MONGO_URI;
+
+if (!MONGO_URI) {
+  console.error('MONGO_URI is not set. Set it as an environment variable.');
+  process.exit(1);
+}
 
 mongoose.connect(MONGO_URI)
   .then(() => console.log('MongoDB connected:', MONGO_URI))

@@ -15,8 +15,6 @@ fi
 
 mkdir -p /opt/app
 cat > /opt/app/docker-compose.yml <<'EOF'
-version: "3.8"
-
 services:
   frontend:
     image: ${dockerhub_username}/student-frontend:${image_tag}

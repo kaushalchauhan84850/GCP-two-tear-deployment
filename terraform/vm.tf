@@ -20,6 +20,7 @@ resource "google_compute_instance" "backend" {
     dockerhub_username = var.dockerhub_username
     image_tag           = var.image_tag
     environment          = var.environment
+    mongo_uri            = var.mongo_uri
   })
 
   labels = {

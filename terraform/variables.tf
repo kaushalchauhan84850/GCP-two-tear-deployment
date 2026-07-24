@@ -43,6 +43,12 @@ variable "image_tag" {
   default     = "latest"
 }
 
+variable "mongo_uri" {
+  description = "MongoDB Atlas (or other managed Mongo) connection string"
+  type        = string
+  sensitive   = true
+}
+
 variable "ssh_source_ranges" {
   description = "CIDR ranges allowed for IAP-based SSH"
   type        = list(string)
