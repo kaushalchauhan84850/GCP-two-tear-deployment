@@ -1,34 +1,13 @@
-
 services:
-  mongo:
-    image: mongo:7
-    container_name: mongo
-    restart: always
-    volumes:
-      - mongo_data:/data/db
-    ports:
-      - "27017:27017"
-    networks:
-      - backend_net
-
   backend:
-    image: ${DOCKERHUB_USERNAME}/student-backend:${IMAGE_TAG:-latest}
+    build: .
+    image: ${DOCKERHUB_USERNAME:-local}/student-backend:${IMAGE_TAG:-latest}
     container_name: backend
     restart: always
-    depends_on:
-      - mongo
     environment:
       - PORT=5000
-      - MONGO_URI=mongodb+srv://karannew_1:KSNZgyseaOqUAaq4@cluster1.35jytu3.mongodb.net/?appName=Cluster1
+      # Set this to your MongoDB Atlas (or other managed Mongo) connection string
+      - MONGO_URI=${MONGO_URI}
       - APP_ENV=${APP_ENV:-dev}
     ports:
       - "5000:5000"
-    networks:
-      - backend_net
-
-volumes:
-  mongo_data:
-
-networks:
-  backend_net:
-    driver: bridge

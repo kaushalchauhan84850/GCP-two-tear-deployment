@@ -14,41 +14,19 @@ if ! docker compose version &> /dev/null; then
 fi
 
 mkdir -p /opt/app
-cat > /opt/app/docker-compose.yml <<'EOF'
+cat > /opt/app/docker-compose.yml <<'EOF2'
 services:
-  mongo:
-    image: mongo:7
-    container_name: mongo
-    restart: always
-    volumes:
-      - mongo_data:/data/db
-    ports:
-      - "27017:27017"
-    networks:
-      - backend_net
-
   backend:
     image: ${dockerhub_username}/student-backend:${image_tag}
     container_name: backend
     restart: always
-    depends_on:
-      - mongo
     environment:
       - PORT=5000
-      - MONGO_URI=mongodb://mongo:27017/studentdb
+      - MONGO_URI=${mongo_uri}
       - APP_ENV=${environment}
     ports:
       - "5000:5000"
-    networks:
-      - backend_net
-
-volumes:
-  mongo_data:
-
-networks:
-  backend_net:
-    driver: bridge
-EOF
+EOF2
 
 cd /opt/app
 docker compose pull

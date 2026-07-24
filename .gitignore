@@ -1,5 +1,8 @@
 node_modules/
 .env
+.env.*
+!.env.example
+!.env.*.example
 *.log
 
 # Terraform
@@ -14,6 +17,6 @@ terraform/crash.log
 *.json
 !package.json
 !package-lock.json
-dev-infra-503304-key.json 
-qa-infra-500307-key.json 
+dev-infra-503304-key.json
 prod-infra-503304-key.json
+qa-infra-500307-key.json
