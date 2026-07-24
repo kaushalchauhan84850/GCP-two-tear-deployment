@@ -55,7 +55,7 @@ jobs:
 
       - name: Set up gcloud
         uses: google-github-actions/setup-gcloud@v2
-      
+
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v3
         with:
@@ -72,7 +72,8 @@ jobs:
           terraform apply -auto-approve \
             -var-file="environments/${{ env.ENVIRONMENT }}.tfvars" \
             -var="dockerhub_username=${{ secrets.DOCKERHUB_USERNAME }}" \
-            -var="image_tag=${{ env.IMAGE_TAG }}"
+            -var="image_tag=${{ env.IMAGE_TAG }}" \
+            -var="mongo_uri=${{ secrets.MONGO_URI_PROD }}"
 
   redeploy-containers:
     needs: terraform

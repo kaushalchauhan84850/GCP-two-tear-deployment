@@ -71,7 +71,8 @@ jobs:
           terraform apply -auto-approve \
             -var-file="environments/${{ env.ENVIRONMENT }}.tfvars" \
             -var="dockerhub_username=${{ secrets.DOCKERHUB_USERNAME }}" \
-            -var="image_tag=${{ env.IMAGE_TAG }}"
+            -var="image_tag=${{ env.IMAGE_TAG }}" \
+            -var="mongo_uri=${{ secrets.MONGO_URI_QA }}"
 
   redeploy-containers:
     needs: terraform
