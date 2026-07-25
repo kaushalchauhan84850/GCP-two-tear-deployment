@@ -7,7 +7,7 @@ services:
     environment:
       - PORT=5000
       # Set this to your MongoDB Atlas (or other managed Mongo) connection string
-      - MONGO_URI=${MONGO_URI}
+      - MONGO_URI=${secrets.MONGO_URI}
       - APP_ENV=${APP_ENV:-dev}
     ports:
       - "5000:5000"
