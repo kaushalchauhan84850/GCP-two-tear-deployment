@@ -99,4 +99,4 @@ jobs:
         run: |
           gcloud compute ssh ${{ env.ENVIRONMENT }}-frontend-vm \
             --zone=${{ env.ZONE }} --project=${{ env.PROJECT_ID }} --tunnel-through-iap \
-            --command="sudo cloud-init status --wait; timeout 300 bash -c 'until [ -f /opt/app/docker-compose.yml ]; do echo waiting for startup script...; sleep 5; done'; cd /opt/app && sudo docker compose pull && sudo docker compose down sudo docker compose up -d --remove-orphans"
+            --command="sudo cloud-init status --wait; timeout 300 bash -c 'until [ -f /opt/app/docker-compose.yml ]; do echo waiting for startup script...; sleep 5; done'; cd /opt/app && sudo docker compose pull && sudo docker compose down && sudo docker compose up -d --remove-orphans"
