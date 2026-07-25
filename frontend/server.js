@@ -16,34 +16,73 @@ app.get('/health', (req, res) => {
   res.json({ status: 'ok', service: 'frontend', env: process.env.APP_ENV || 'dev' });
 });
 
+function forwardAuth(req) {
+  return req.headers.authorization
+    ? { headers: { Authorization: req.headers.authorization } }
+    : {};
+}
+
+function handleProxyError(err, res) {
+  console.error('Error contacting backend:', err.message);
+  const status = err.response?.status || 502;
+  const data = err.response?.data || { error: 'Could not reach backend service' };
+  res.status(status).json(data);
+}
+
+// Public: enrollment form submission
 app.post('/api/students', async (req, res) => {
   try {
     const response = await axios.post(`${BACKEND_URL}/students`, req.body);
     res.status(201).json(response.data);
   } catch (err) {
-    console.error('Error contacting backend:', err.message);
-    res.status(502).json({ error: 'Could not reach backend service' });
+    handleProxyError(err, res);
   }
 });
 
-app.get('/api/students', async (req, res) => {
+// Admin login
+app.post('/api/admin/login', async (req, res) => {
   try {
-    const response = await axios.get(`${BACKEND_URL}/students`);
+    const response = await axios.post(`${BACKEND_URL}/admin/login`, req.body);
     res.json(response.data);
   } catch (err) {
-    console.error('Error contacting backend:', err.message);
-    res.status(502).json({ error: 'Could not reach backend service' });
+    handleProxyError(err, res);
   }
 });
 
-app.delete('/api/students/:id', async (req, res) => {
+// Admin: list students
+app.get('/api/admin/students', async (req, res) => {
   try {
-    const response = await axios.delete(`${BACKEND_URL}/students/${req.params.id}`);
+    const response = await axios.get(`${BACKEND_URL}/students`, forwardAuth(req));
     res.json(response.data);
   } catch (err) {
-    console.error('Error contacting backend:', err.message);
-    const status = err.response?.status || 502;
-    res.status(status).json({ error: 'Could not delete record' });
+    handleProxyError(err, res);
+  }
+});
+
+// Admin: update a student
+app.put('/api/admin/students/:id', async (req, res) => {
+  try {
+    const response = await axios.put(
+      `${BACKEND_URL}/students/${req.params.id}`,
+      req.body,
+      forwardAuth(req)
+    );
+    res.json(response.data);
+  } catch (err) {
+    handleProxyError(err, res);
+  }
+});
+
+// Admin: delete a student
+app.delete('/api/admin/students/:id', async (req, res) => {
+  try {
+    const response = await axios.delete(
+      `${BACKEND_URL}/students/${req.params.id}`,
+      forwardAuth(req)
+    );
+    res.json(response.data);
+  } catch (err) {
+    handleProxyError(err, res);
   }
 });
 

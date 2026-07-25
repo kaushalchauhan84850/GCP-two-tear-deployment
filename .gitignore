@@ -17,8 +17,3 @@ terraform/crash.log
 *.json
 !package.json
 !package-lock.json
-# local testing
-.env
-.env.*
-!.env.example
-!.env.*.example

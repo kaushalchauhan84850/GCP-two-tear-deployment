@@ -72,7 +72,10 @@ jobs:
             -var-file="environments/${{ env.ENVIRONMENT }}.tfvars" \
             -var="dockerhub_username=${{ secrets.DOCKERHUB_USERNAME }}" \
             -var="image_tag=${{ env.IMAGE_TAG }}" \
-            -var="mongo_uri=${{ secrets.MONGO_URI_QA }}"
+            -var="mongo_uri=${{ secrets.MONGO_URI_QA }}" \
+            -var="admin_username=${{ secrets.ADMIN_USERNAME_QA }}" \
+            -var="admin_password=${{ secrets.ADMIN_PASSWORD_QA }}" \
+            -var="jwt_secret=${{ secrets.JWT_SECRET_QA }}"
 
   redeploy-containers:
     needs: terraform

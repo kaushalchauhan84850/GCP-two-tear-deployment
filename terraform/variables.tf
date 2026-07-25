@@ -49,6 +49,24 @@ variable "mongo_uri" {
   sensitive   = true
 }
 
+variable "admin_username" {
+  description = "Admin dashboard login username"
+  type        = string
+  default     = "admin"
+}
+
+variable "admin_password" {
+  description = "Admin dashboard login password"
+  type        = string
+  sensitive   = true
+}
+
+variable "jwt_secret" {
+  description = "Secret used to sign admin session tokens"
+  type        = string
+  sensitive   = true
+}
+
 variable "ssh_source_ranges" {
   description = "CIDR ranges allowed for IAP-based SSH"
   type        = list(string)

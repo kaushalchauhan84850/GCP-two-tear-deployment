@@ -24,6 +24,9 @@ services:
       - PORT=5000
       - MONGO_URI=${mongo_uri}
       - APP_ENV=${environment}
+      - ADMIN_USERNAME=${admin_username}
+      - ADMIN_PASSWORD=${admin_password}
+      - JWT_SECRET=${jwt_secret}
     ports:
       - "5000:5000"
 EOF2

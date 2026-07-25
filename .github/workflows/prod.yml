@@ -1,4 +1,5 @@
 name: Deploy - PROD
+
 on:
   push:
     branches: [prod]
@@ -72,7 +73,10 @@ jobs:
             -var-file="environments/${{ env.ENVIRONMENT }}.tfvars" \
             -var="dockerhub_username=${{ secrets.DOCKERHUB_USERNAME }}" \
             -var="image_tag=${{ env.IMAGE_TAG }}" \
-            -var="mongo_uri=${{ secrets.MONGO_URI_PROD }}"
+            -var="mongo_uri=${{ secrets.MONGO_URI_PROD }}" \
+            -var="admin_username=${{ secrets.ADMIN_USERNAME_PROD }}" \
+            -var="admin_password=${{ secrets.ADMIN_PASSWORD_PROD }}" \
+            -var="jwt_secret=${{ secrets.JWT_SECRET_PROD }}"
 
   redeploy-containers:
     needs: terraform

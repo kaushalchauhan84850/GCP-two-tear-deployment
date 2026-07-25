@@ -21,6 +21,9 @@ resource "google_compute_instance" "backend" {
     image_tag           = var.image_tag
     environment          = var.environment
     mongo_uri            = var.mongo_uri
+    admin_username        = var.admin_username
+    admin_password        = var.admin_password
+    jwt_secret            = var.jwt_secret
   })
 
   labels = {

@@ -3,309 +3,545 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Student Registry</title>
+<title>Smash Court Badminton Academy — Enrollment</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --ink: #1b2340;
-    --ink-soft: #4a5170;
-    --paper: #eef0f4;
+    --court: #0b5d3b;
+    --court-dark: #073b26;
+    --line-white: rgba(255,255,255,0.85);
+    --shuttle: #ffd23f;
+    --shuttle-dark: #e0ab00;
+    --ink: #0f2419;
     --panel: #ffffff;
-    --line: #d9dce6;
-    --accent: #0e7c6b;
-    --accent-dark: #0a5f52;
-    --danger: #b3423a;
-    --danger-dark: #93332c;
+    --muted: #5a6b62;
+    --danger: #c0392b;
+    --danger-dark: #9c2b1f;
   }
 
   * { box-sizing: border-box; }
 
   body {
     margin: 0;
-    background: var(--paper);
-    background-image:
-      linear-gradient(var(--line) 1px, transparent 1px),
-      linear-gradient(90deg, var(--line) 1px, transparent 1px);
-    background-size: 28px 28px;
-    background-position: -1px -1px;
-    color: var(--ink);
-    font-family: 'Inter', sans-serif;
     min-height: 100vh;
-    padding: 40px 20px 60px;
+    font-family: 'Inter', sans-serif;
+    color: var(--ink);
+    background-color: var(--court);
+    background-image:
+      linear-gradient(rgba(7,59,38,0.55), rgba(7,59,38,0.75)),
+      repeating-linear-gradient(0deg, transparent 0 118px, var(--line-white) 118px 120px),
+      repeating-linear-gradient(90deg, transparent 0 118px, var(--line-white) 118px 120px);
+    background-size: cover, 100% 100%, 100% 100%;
+    background-attachment: fixed;
+    position: relative;
   }
 
-  header.masthead {
-    max-width: 1080px;
-    margin: 0 auto 32px;
-    border-bottom: 3px solid var(--ink);
-    padding-bottom: 18px;
+  /* center court line + net suggestion */
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 50%;
+    width: 2px; height: 100vh;
+    background: var(--line-white);
+    opacity: 0.35;
+    transform: translateX(-50%);
+    pointer-events: none;
+  }
+
+  .topbar {
     display: flex;
-    align-items: baseline;
     justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 8px;
+    align-items: center;
+    padding: 20px 28px;
+    position: relative;
+    z-index: 2;
   }
 
-  header.masthead h1 {
-    font-family: 'Source Serif 4', serif;
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #fff;
+  }
+  .brand .mark {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    background: var(--shuttle);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Anton', sans-serif;
+    color: var(--court-dark);
+    font-size: 18px;
+  }
+  .brand .name {
+    font-family: 'Anton', sans-serif;
+    font-size: 20px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+
+  #adminLoginBtn {
+    background: var(--shuttle);
+    color: var(--court-dark);
+    border: none;
+    padding: 10px 18px;
+    border-radius: 4px;
     font-weight: 700;
-    font-size: 32px;
-    margin: 0;
-    letter-spacing: -0.01em;
+    font-size: 13px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  #adminLoginBtn:hover { background: var(--shuttle-dark); }
+
+  main {
+    position: relative;
+    z-index: 2;
+    max-width: 640px;
+    margin: 20px auto 60px;
+    padding: 0 20px;
   }
 
-  header.masthead .tag {
+  .hero {
+    text-align: center;
+    color: #fff;
+    margin-bottom: 24px;
+  }
+  .hero .eyebrow {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 12px;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: var(--ink-soft);
+    color: var(--shuttle);
   }
-
-  .layout {
-    max-width: 1080px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 340px 1fr;
-    gap: 24px;
-    align-items: start;
+  .hero h1 {
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(32px, 6vw, 48px);
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    margin: 6px 0 8px;
+    line-height: 1.05;
   }
-
-  @media (max-width: 820px) {
-    .layout { grid-template-columns: 1fr; }
-  }
+  .hero p { color: rgba(255,255,255,0.85); font-size: 15px; max-width: 460px; margin: 0 auto; }
 
   .panel {
     background: var(--panel);
-    border: 1px solid var(--line);
-    border-radius: 4px;
-    box-shadow: 0 1px 3px rgba(27, 35, 64, 0.06);
+    border-radius: 8px;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.25);
+    overflow: hidden;
   }
 
-  .panel-head {
-    padding: 16px 20px;
-    border-bottom: 1px solid var(--line);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
+  form { padding: 28px; }
 
-  .panel-head h2 {
-    font-family: 'Source Serif 4', serif;
-    font-size: 18px;
-    margin: 0;
-    font-weight: 600;
-  }
-
-  .eyebrow {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--accent-dark);
-    display: block;
-    margin-bottom: 4px;
-  }
-
-  form { padding: 20px; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 520px) { .grid2 { grid-template-columns: 1fr; } }
 
   .field { margin-bottom: 16px; }
-
   .field label {
     display: block;
     font-size: 13px;
-    font-weight: 500;
-    color: var(--ink-soft);
+    font-weight: 600;
+    color: var(--muted);
     margin-bottom: 6px;
   }
-
-  .field input {
+  .field input, .field select, .field textarea {
     width: 100%;
     padding: 10px 12px;
-    border: 1px solid var(--line);
-    border-radius: 3px;
+    border: 1px solid #dbe3dd;
+    border-radius: 5px;
     font-family: 'Inter', sans-serif;
     font-size: 14px;
     color: var(--ink);
-    background: #fbfbfd;
-    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    background: #f8faf9;
   }
-
-  .field input:focus {
+  .field input:focus, .field select:focus, .field textarea:focus {
     outline: none;
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(14, 124, 107, 0.12);
+    border-color: var(--court);
+    box-shadow: 0 0 0 3px rgba(11,93,59,0.12);
     background: #fff;
   }
+  .field textarea { resize: vertical; min-height: 60px; }
+
+  .section-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--court);
+    margin: 20px 0 12px;
+    padding-top: 12px;
+    border-top: 1px dashed #dbe3dd;
+  }
+  .section-label:first-child { margin-top: 0; padding-top: 0; border-top: none; }
 
   .btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
     border: none;
-    border-radius: 3px;
+    border-radius: 5px;
     font-family: 'Inter', sans-serif;
+    font-weight: 700;
     font-size: 14px;
-    font-weight: 600;
     cursor: pointer;
-    padding: 10px 16px;
-    transition: background 0.15s ease, transform 0.05s ease;
+    padding: 12px 18px;
   }
-  .btn:active { transform: translateY(1px); }
+  .btn-primary {
+    background: var(--court);
+    color: #fff;
+    width: 100%;
+    margin-top: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    font-size: 13px;
+  }
+  .btn-primary:hover { background: var(--court-dark); }
+  .btn-primary:disabled { background: #9db6ab; cursor: not-allowed; }
 
-  .btn-primary { background: var(--accent); color: #fff; width: 100%; margin-top: 4px; }
-  .btn-primary:hover { background: var(--accent-dark); }
-  .btn-primary:disabled { background: #a9c6c0; cursor: not-allowed; }
+  /* ---- Modal shared ---- */
+  .overlay {
+    position: fixed; inset: 0;
+    background: rgba(7,20,14,0.55);
+    display: none;
+    align-items: center; justify-content: center;
+    z-index: 50;
+    padding: 20px;
+  }
+  .overlay.show { display: flex; }
+  .modal {
+    background: #fff;
+    border-radius: 8px;
+    max-width: 420px;
+    width: 100%;
+    padding: 32px 28px;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+  }
 
+  .success-icon {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: var(--court);
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 16px;
+    font-size: 28px;
+  }
+  .modal h3 { font-family: 'Anton', sans-serif; font-size: 22px; text-transform: uppercase; margin: 0 0 8px; }
+  .modal p { color: var(--muted); font-size: 14px; margin: 0 0 20px; }
+
+  /* ---- Admin login modal ---- */
+  .modal.login-modal { text-align: left; max-width: 380px; }
+  .modal.login-modal h3 { text-align: center; margin-bottom: 20px; }
+  .modal.login-modal .field { margin-bottom: 14px; }
+  #loginError { color: var(--danger); font-size: 13px; margin-top: 8px; min-height: 16px; }
+
+  .modal-actions { display: flex; gap: 10px; }
+  .btn-secondary {
+    background: #eef1ef; color: var(--ink); flex: 1;
+  }
+  .btn-secondary:hover { background: #e0e5e1; }
+
+  /* ---- Admin dashboard ---- */
+  #adminView { display: none; }
+  #adminView.show { display: block; }
+  #publicView.hide { display: none; }
+
+  .admin-shell {
+    max-width: 1100px;
+    margin: 20px auto 60px;
+    padding: 0 20px;
+    position: relative;
+    z-index: 2;
+  }
+  .admin-panel {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.25);
+    overflow: hidden;
+  }
+  .admin-head {
+    padding: 18px 24px;
+    border-bottom: 1px solid #e5e9e6;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .admin-head h2 {
+    font-family: 'Anton', sans-serif;
+    text-transform: uppercase;
+    font-size: 20px;
+    margin: 0;
+    color: var(--court-dark);
+  }
+  .head-actions { display: flex; gap: 8px; align-items: center; }
   .btn-ghost {
-    background: transparent;
-    color: var(--ink-soft);
-    border: 1px solid var(--line);
-    padding: 6px 12px;
-    font-size: 13px;
+    background: transparent; border: 1px solid #d5dbd7; color: var(--muted);
+    padding: 8px 14px; font-size: 13px; border-radius: 5px; font-weight: 600; cursor: pointer;
   }
-  .btn-ghost:hover { border-color: var(--ink); color: var(--ink); }
-
-  .btn-danger {
-    background: transparent;
-    color: var(--danger);
-    border: 1px solid transparent;
-    padding: 5px 10px;
-    font-size: 12px;
-    font-family: 'IBM Plex Mono', monospace;
-  }
-  .btn-danger:hover { background: rgba(179, 66, 58, 0.08); border-color: rgba(179, 66, 58, 0.3); }
-  .btn-danger:disabled { opacity: 0.4; cursor: not-allowed; }
-
-  #formMsg {
-    margin-top: 12px;
-    font-size: 13px;
-    font-weight: 500;
-    min-height: 18px;
-  }
-  #formMsg.ok { color: var(--accent-dark); }
-  #formMsg.err { color: var(--danger); }
+  .btn-ghost:hover { border-color: var(--court); color: var(--court); }
 
   .table-wrap { overflow-x: auto; }
-
   table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
-
   thead th {
     text-align: left;
     font-family: 'IBM Plex Mono', monospace;
     font-size: 11px;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: var(--ink-soft);
+    color: var(--muted);
     padding: 10px 16px;
-    border-bottom: 1px solid var(--line);
+    border-bottom: 1px solid #e5e9e6;
     white-space: nowrap;
   }
-
-  tbody td {
-    padding: 12px 16px;
-    border-bottom: 1px solid #eceef3;
-    vertical-align: top;
-  }
-
-  tbody tr:hover { background: #fafbfd; }
-
+  tbody td { padding: 12px 16px; border-bottom: 1px solid #eef1ef; vertical-align: top; }
+  tbody tr:hover { background: #fafcfa; }
   tbody tr:last-child td { border-bottom: none; }
-
-  .roll {
-    font-family: 'IBM Plex Mono', monospace;
-    color: var(--accent-dark);
-    font-weight: 500;
+  .badge {
+    display: inline-block; padding: 2px 8px; border-radius: 10px;
+    font-size: 11px; font-weight: 600;
   }
+  .badge.Beginner { background: #e7f3ec; color: #1f7a4d; }
+  .badge.Intermediate { background: #fff3d6; color: #9a6b00; }
+  .badge.Advanced { background: #fde5e2; color: var(--danger-dark); }
 
-  .muted { color: var(--ink-soft); font-size: 12.5px; }
-
-  .empty-state, .load-state {
-    padding: 48px 20px;
-    text-align: center;
-    color: var(--ink-soft);
-    font-size: 14px;
+  .row-actions { display: flex; gap: 6px; }
+  .btn-mini {
+    border: 1px solid #d5dbd7; background: #fff; color: var(--muted);
+    padding: 5px 10px; font-size: 12px; border-radius: 4px; cursor: pointer; font-weight: 600;
   }
-  .empty-state strong { display: block; color: var(--ink); font-family: 'Source Serif 4', serif; font-size: 17px; margin-bottom: 6px; font-weight: 600; }
+  .btn-mini:hover { border-color: var(--court); color: var(--court); }
+  .btn-mini.danger:hover { border-color: var(--danger); color: var(--danger); }
+
+  .empty-state, .load-state { padding: 48px 20px; text-align: center; color: var(--muted); font-size: 14px; }
+  .empty-state strong { display: block; color: var(--ink); font-family: 'Anton', sans-serif; font-size: 18px; margin-bottom: 6px; text-transform: uppercase; }
 
   .count-badge {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    background: var(--ink);
-    color: #fff;
-    padding: 2px 8px;
-    border-radius: 10px;
+    font-size: 11px; background: var(--court); color: #fff;
+    padding: 2px 8px; border-radius: 10px; margin-left: 8px;
   }
 
-  .head-actions { display: flex; align-items: center; gap: 10px; }
+  .modal.edit-modal { max-width: 520px; text-align: left; }
+  .modal.edit-modal h3 { text-align: center; }
 </style>
 </head>
 <body>
 
-<header class="masthead">
-  <div>
-    <span class="tag">Registrar's Office · Records System</span>
-    <h1>Student Registry</h1>
+<!-- ===== TOP BAR ===== -->
+<div class="topbar">
+  <div class="brand">
+    <div class="mark">🏸</div>
+    <div class="name">Smash Court Academy</div>
   </div>
-</header>
+  <button id="adminLoginBtn">Admin Login</button>
+</div>
 
-<div class="layout">
+<!-- ===== PUBLIC ENROLLMENT VIEW ===== -->
+<main id="publicView">
+  <div class="hero">
+    <span class="eyebrow">2026 Season Enrollment</span>
+    <h1>Join The Academy</h1>
+    <p>Train with certified coaches on regulation courts. Fill in your details below to reserve your spot.</p>
+  </div>
 
   <div class="panel">
-    <div class="panel-head">
-      <h2>New Entry</h2>
-    </div>
     <form id="studentForm">
-      <span class="eyebrow">Enrollment</span>
-      <div class="field">
-        <label for="name">Full name</label>
-        <input id="name" type="text" name="name" placeholder="e.g. Ananya Sharma" required />
+      <div class="section-label">Player details</div>
+      <div class="grid2">
+        <div class="field">
+          <label for="name">Full name</label>
+          <input id="name" name="name" type="text" placeholder="e.g. Ananya Sharma" required />
+        </div>
+        <div class="field">
+          <label for="age">Age</label>
+          <input id="age" name="age" type="number" min="4" max="80" placeholder="e.g. 14" required />
+        </div>
+      </div>
+      <div class="grid2">
+        <div class="field">
+          <label for="gender">Gender</label>
+          <select id="gender" name="gender" required>
+            <option value="">Select…</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="skillLevel">Skill level</label>
+          <select id="skillLevel" name="skillLevel" required>
+            <option>Beginner</option>
+            <option>Intermediate</option>
+            <option>Advanced</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="section-label">Contact information</div>
+      <div class="grid2">
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" placeholder="you@email.com" required />
+        </div>
+        <div class="field">
+          <label for="phone">Phone</label>
+          <input id="phone" name="phone" type="text" placeholder="10-digit number" required />
+        </div>
       </div>
       <div class="field">
-        <label for="rollNumber">Roll number</label>
-        <input id="rollNumber" type="text" name="rollNumber" placeholder="e.g. CS-2026-014" required />
+        <label for="address">Address <span style="color:var(--muted); font-weight:400;">(optional)</span></label>
+        <input id="address" name="address" type="text" placeholder="Street, city" />
+      </div>
+
+      <div class="section-label">Guardian details</div>
+      <div class="grid2">
+        <div class="field">
+          <label for="guardianName">Guardian name</label>
+          <input id="guardianName" name="guardianName" type="text" placeholder="e.g. Rakesh Sharma" required />
+        </div>
+        <div class="field">
+          <label for="guardianPhone">Guardian phone</label>
+          <input id="guardianPhone" name="guardianPhone" type="text" placeholder="10-digit number" required />
+        </div>
+      </div>
+
+      <div class="section-label">Training preferences</div>
+      <div class="field">
+        <label for="preferredBatch">Preferred batch</label>
+        <select id="preferredBatch" name="preferredBatch" required>
+          <option>Morning</option>
+          <option>Evening</option>
+          <option>Weekend</option>
+        </select>
       </div>
       <div class="field">
-        <label for="email">Email</label>
-        <input id="email" type="email" name="email" placeholder="name@college.edu" required />
+        <label for="medicalNotes">Medical notes <span style="color:var(--muted); font-weight:400;">(injuries, conditions — optional)</span></label>
+        <textarea id="medicalNotes" name="medicalNotes" placeholder="Let coaches know of anything relevant"></textarea>
       </div>
-      <div class="field">
-        <label for="course">Course</label>
-        <input id="course" type="text" name="course" placeholder="e.g. B.Tech Computer Science" required />
-      </div>
-      <div class="field">
-        <label for="phone">Phone <span class="muted">(optional)</span></label>
-        <input id="phone" type="text" name="phone" placeholder="10-digit number" />
-      </div>
-      <button type="submit" class="btn btn-primary" id="submitBtn">Save record</button>
-      <div id="formMsg"></div>
+
+      <button type="submit" class="btn btn-primary" id="submitBtn">Submit enrollment</button>
     </form>
   </div>
+</main>
 
-  <div class="panel">
-    <div class="panel-head">
-      <h2>Records <span class="count-badge" id="countBadge">0</span></h2>
+<!-- ===== SUCCESS MODAL ===== -->
+<div class="overlay" id="successOverlay">
+  <div class="modal">
+    <div class="success-icon">✓</div>
+    <h3>Form submitted successfully</h3>
+    <p>Thanks — your enrollment has been received. Our team will reach out shortly to confirm your batch.</p>
+    <button class="btn btn-primary" id="successCloseBtn" style="margin-top:0;">Done</button>
+  </div>
+</div>
+
+<!-- ===== ADMIN LOGIN MODAL ===== -->
+<div class="overlay" id="loginOverlay">
+  <div class="modal login-modal">
+    <h3>Admin Login</h3>
+    <form id="loginForm">
+      <div class="field">
+        <label for="loginUsername">Username</label>
+        <input id="loginUsername" name="username" type="text" required autocomplete="username" />
+      </div>
+      <div class="field">
+        <label for="loginPassword">Password</label>
+        <input id="loginPassword" name="password" type="password" required autocomplete="current-password" />
+      </div>
+      <div id="loginError"></div>
+      <div class="modal-actions" style="margin-top:6px;">
+        <button type="button" class="btn btn-secondary" id="loginCancelBtn">Cancel</button>
+        <button type="submit" class="btn btn-primary" style="margin-top:0;" id="loginSubmitBtn">Log in</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ===== EDIT MODAL ===== -->
+<div class="overlay" id="editOverlay">
+  <div class="modal edit-modal">
+    <h3>Edit Enrollment</h3>
+    <form id="editForm">
+      <div class="grid2">
+        <div class="field"><label>Name</label><input name="name" required /></div>
+        <div class="field"><label>Age</label><input name="age" type="number" required /></div>
+      </div>
+      <div class="grid2">
+        <div class="field">
+          <label>Gender</label>
+          <select name="gender" required><option>Male</option><option>Female</option><option>Other</option></select>
+        </div>
+        <div class="field">
+          <label>Skill level</label>
+          <select name="skillLevel" required><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select>
+        </div>
+      </div>
+      <div class="grid2">
+        <div class="field"><label>Email</label><input name="email" type="email" required /></div>
+        <div class="field"><label>Phone</label><input name="phone" required /></div>
+      </div>
+      <div class="grid2">
+        <div class="field"><label>Guardian name</label><input name="guardianName" required /></div>
+        <div class="field"><label>Guardian phone</label><input name="guardianPhone" required /></div>
+      </div>
+      <div class="field">
+        <label>Preferred batch</label>
+        <select name="preferredBatch" required><option>Morning</option><option>Evening</option><option>Weekend</option></select>
+      </div>
+      <div id="editError" style="color:var(--danger); font-size:13px; min-height:16px;"></div>
+      <div class="modal-actions" style="margin-top:10px;">
+        <button type="button" class="btn btn-secondary" id="editCancelBtn">Cancel</button>
+        <button type="submit" class="btn btn-primary" style="margin-top:0;" id="editSaveBtn">Save changes</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ===== ADMIN DASHBOARD VIEW ===== -->
+<div class="admin-shell" id="adminView">
+  <div class="admin-panel">
+    <div class="admin-head">
+      <h2>Enrollments <span class="count-badge" id="countBadge">0</span></h2>
       <div class="head-actions">
-        <button class="btn btn-ghost" id="reloadBtn" type="button">↻ Reload</button>
+        <button class="btn-ghost" id="reloadBtn" type="button">↻ Reload</button>
+        <button class="btn-ghost" id="logoutBtn" type="button">Log out</button>
       </div>
     </div>
     <div class="table-wrap" id="tableWrap">
       <div class="load-state">Loading records…</div>
     </div>
   </div>
-
 </div>
 
 <script>
-const form = document.getElementById('studentForm');
-const formMsg = document.getElementById('formMsg');
-const submitBtn = document.getElementById('submitBtn');
+const publicView = document.getElementById('publicView');
+const adminView = document.getElementById('adminView');
+const adminLoginBtn = document.getElementById('adminLoginBtn');
+
+const successOverlay = document.getElementById('successOverlay');
+const successCloseBtn = document.getElementById('successCloseBtn');
+
+const loginOverlay = document.getElementById('loginOverlay');
+const loginForm = document.getElementById('loginForm');
+const loginError = document.getElementById('loginError');
+const loginCancelBtn = document.getElementById('loginCancelBtn');
+const loginSubmitBtn = document.getElementById('loginSubmitBtn');
+
+const editOverlay = document.getElementById('editOverlay');
+const editForm = document.getElementById('editForm');
+const editError = document.getElementById('editError');
+const editCancelBtn = document.getElementById('editCancelBtn');
+
 const tableWrap = document.getElementById('tableWrap');
 const countBadge = document.getElementById('countBadge');
 const reloadBtn = document.getElementById('reloadBtn');
+const logoutBtn = document.getElementById('logoutBtn');
+
+let editingId = null;
+
+function getToken() { return sessionStorage.getItem('adminToken'); }
+function setToken(t) { sessionStorage.setItem('adminToken', t); }
+function clearToken() { sessionStorage.removeItem('adminToken'); }
 
 function escapeHtml(str) {
   return String(str ?? '').replace(/[&<>"']/g, (c) => ({
@@ -313,42 +549,150 @@ function escapeHtml(str) {
   }[c]));
 }
 
-function formatDate(iso) {
-  if (!iso) return '—';
-  const d = new Date(iso);
-  return d.toLocaleDateString(undefined, { day: '2-digit', month: 'short', year: 'numeric' });
+/* ---------- Public enrollment form ---------- */
+
+document.getElementById('studentForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const form = e.target;
+  const submitBtn = document.getElementById('submitBtn');
+  const data = Object.fromEntries(new FormData(form).entries());
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Submitting…';
+
+  try {
+    const res = await fetch('/api/students', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    if (res.ok) {
+      form.reset();
+      successOverlay.classList.add('show');
+    } else {
+      const body = await res.json().catch(() => ({}));
+      alert(body.error || 'Failed to submit. Please check your details and try again.');
+    }
+  } catch (err) {
+    alert('Could not reach the server. Please try again.');
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Submit enrollment';
+  }
+});
+
+successCloseBtn.addEventListener('click', () => successOverlay.classList.remove('show'));
+
+/* ---------- Admin login ---------- */
+
+adminLoginBtn.addEventListener('click', () => {
+  const inAdminView = adminView.classList.contains('show');
+
+  if (inAdminView) {
+    adminView.classList.remove('show');
+    publicView.classList.remove('hide');
+    adminLoginBtn.textContent = 'Admin Login';
+    return;
+  }
+
+  if (getToken()) {
+    showAdmin();
+  } else {
+    loginError.textContent = '';
+    loginOverlay.classList.add('show');
+  }
+});
+
+loginCancelBtn.addEventListener('click', () => loginOverlay.classList.remove('show'));
+
+loginForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const data = Object.fromEntries(new FormData(loginForm).entries());
+  loginSubmitBtn.disabled = true;
+  loginSubmitBtn.textContent = 'Logging in…';
+  loginError.textContent = '';
+
+  try {
+    const res = await fetch('/api/admin/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    const body = await res.json();
+    if (res.ok) {
+      setToken(body.token);
+      loginOverlay.classList.remove('show');
+      loginForm.reset();
+      showAdmin();
+    } else {
+      loginError.textContent = body.error || 'Login failed.';
+    }
+  } catch (err) {
+    loginError.textContent = 'Could not reach the server.';
+  } finally {
+    loginSubmitBtn.disabled = false;
+    loginSubmitBtn.textContent = 'Log in';
+  }
+});
+
+logoutBtn.addEventListener('click', () => {
+  clearToken();
+  adminView.classList.remove('show');
+  publicView.classList.remove('hide');
+  adminLoginBtn.textContent = 'Admin Login';
+});
+
+function showAdmin() {
+  publicView.classList.add('hide');
+  adminView.classList.add('show');
+  adminLoginBtn.textContent = 'Back to form';
+  loadStudents();
 }
+
+/* ---------- Admin dashboard ---------- */
 
 async function loadStudents() {
   tableWrap.innerHTML = '<div class="load-state">Loading records…</div>';
   try {
-    const res = await fetch('/api/students');
-    if (!res.ok) throw new Error('bad status');
+    const res = await fetch('/api/admin/students', {
+      headers: { Authorization: `Bearer ${getToken()}` }
+    });
+    if (res.status === 401) {
+      clearToken();
+      tableWrap.innerHTML = '<div class="empty-state"><strong>Session expired</strong>Log in again to view records.</div>';
+      countBadge.textContent = '—';
+      return;
+    }
     const students = await res.json();
     renderTable(students);
   } catch (err) {
-    tableWrap.innerHTML = '<div class="empty-state"><strong>Could not load records</strong>The records service is unreachable. Try reloading.</div>';
-    countBadge.textContent = '—';
+    tableWrap.innerHTML = '<div class="empty-state"><strong>Could not load records</strong>Try reloading.</div>';
   }
 }
 
 function renderTable(students) {
   countBadge.textContent = students.length;
-
-  if (students.length === 0) {
-    tableWrap.innerHTML = '<div class="empty-state"><strong>No records yet</strong>Entries you save will appear here.</div>';
+  if (!students.length) {
+    tableWrap.innerHTML = '<div class="empty-state"><strong>No enrollments yet</strong>Submitted forms will appear here.</div>';
     return;
   }
 
   const rows = students.map((s) => `
     <tr data-id="${s._id}">
-      <td class="roll">${escapeHtml(s.rollNumber)}</td>
       <td>${escapeHtml(s.name)}</td>
-      <td>${escapeHtml(s.course)}</td>
+      <td>${s.age}</td>
+      <td>${escapeHtml(s.gender)}</td>
+      <td><span class="badge ${s.skillLevel}">${escapeHtml(s.skillLevel)}</span></td>
+      <td>${escapeHtml(s.preferredBatch)}</td>
       <td>${escapeHtml(s.email)}</td>
-      <td>${escapeHtml(s.phone) || '<span class="muted">—</span>'}</td>
-      <td class="muted">${formatDate(s.createdAt)}</td>
-      <td><button class="btn btn-danger" data-delete="${s._id}">Delete</button></td>
+      <td>${escapeHtml(s.phone)}</td>
+      <td>${escapeHtml(s.guardianName)}<br><span style="color:var(--muted); font-size:12px;">${escapeHtml(s.guardianPhone)}</span></td>
+      <td>
+        <div class="row-actions">
+          <button class="btn-mini" data-edit="${s._id}">Edit</button>
+          <button class="btn-mini danger" data-delete="${s._id}">Delete</button>
+        </div>
+      </td>
     </tr>
   `).join('');
 
@@ -356,13 +700,8 @@ function renderTable(students) {
     <table>
       <thead>
         <tr>
-          <th>Roll no.</th>
-          <th>Name</th>
-          <th>Course</th>
-          <th>Email</th>
-          <th>Phone</th>
-          <th>Added</th>
-          <th></th>
+          <th>Name</th><th>Age</th><th>Gender</th><th>Level</th><th>Batch</th>
+          <th>Email</th><th>Phone</th><th>Guardian</th><th></th>
         </tr>
       </thead>
       <tbody>${rows}</tbody>
@@ -372,61 +711,88 @@ function renderTable(students) {
   tableWrap.querySelectorAll('[data-delete]').forEach((btn) => {
     btn.addEventListener('click', () => deleteStudent(btn.getAttribute('data-delete'), btn));
   });
+  tableWrap.querySelectorAll('[data-edit]').forEach((btn) => {
+    btn.addEventListener('click', () => openEdit(students.find((s) => s._id === btn.getAttribute('data-edit'))));
+  });
 }
 
 async function deleteStudent(id, btn) {
-  if (!confirm('Remove this record? This cannot be undone.')) return;
+  if (!confirm('Remove this enrollment? This cannot be undone.')) return;
   btn.disabled = true;
-  btn.textContent = 'Removing…';
+  btn.textContent = '…';
   try {
-    const res = await fetch(`/api/students/${id}`, { method: 'DELETE' });
+    const res = await fetch(`/api/admin/students/${id}`, {
+      method: 'DELETE',
+      headers: { Authorization: `Bearer ${getToken()}` }
+    });
     if (!res.ok) throw new Error('delete failed');
     await loadStudents();
   } catch (err) {
     btn.disabled = false;
     btn.textContent = 'Delete';
-    alert('Could not delete this record. Try again.');
+    alert('Could not delete this record.');
   }
 }
 
-form.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const data = Object.fromEntries(new FormData(form).entries());
+reloadBtn.addEventListener('click', loadStudents);
 
-  submitBtn.disabled = true;
-  submitBtn.textContent = 'Saving…';
-  formMsg.textContent = '';
-  formMsg.className = '';
+/* ---------- Edit modal ---------- */
+
+function openEdit(student) {
+  if (!student) return;
+  editingId = student._id;
+  editError.textContent = '';
+  const f = editForm;
+  f.name.value = student.name || '';
+  f.age.value = student.age || '';
+  f.gender.value = student.gender || 'Male';
+  f.skillLevel.value = student.skillLevel || 'Beginner';
+  f.email.value = student.email || '';
+  f.phone.value = student.phone || '';
+  f.guardianName.value = student.guardianName || '';
+  f.guardianPhone.value = student.guardianPhone || '';
+  f.preferredBatch.value = student.preferredBatch || 'Morning';
+  editOverlay.classList.add('show');
+}
+
+editCancelBtn.addEventListener('click', () => editOverlay.classList.remove('show'));
+
+editForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const data = Object.fromEntries(new FormData(editForm).entries());
+  const saveBtn = document.getElementById('editSaveBtn');
+  saveBtn.disabled = true;
+  saveBtn.textContent = 'Saving…';
+  editError.textContent = '';
 
   try {
-    const res = await fetch('/api/students', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+    const res = await fetch(`/api/admin/students/${editingId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${getToken()}`
+      },
       body: JSON.stringify(data)
     });
-
     if (res.ok) {
-      formMsg.textContent = 'Record saved.';
-      formMsg.className = 'ok';
-      form.reset();
+      editOverlay.classList.remove('show');
       await loadStudents();
     } else {
       const body = await res.json().catch(() => ({}));
-      formMsg.textContent = body.error || 'Failed to save details.';
-      formMsg.className = 'err';
+      editError.textContent = body.error || 'Could not save changes.';
     }
   } catch (err) {
-    formMsg.textContent = 'Could not reach the server.';
-    formMsg.className = 'err';
+    editError.textContent = 'Could not reach the server.';
   } finally {
-    submitBtn.disabled = false;
-    submitBtn.textContent = 'Save record';
+    saveBtn.disabled = false;
+    saveBtn.textContent = 'Save changes';
   }
 });
 
-reloadBtn.addEventListener('click', loadStudents);
-
-loadStudents();
+/* Restore admin session on page load if a token is already present */
+if (getToken()) {
+  adminLoginBtn.textContent = 'Back to form';
+}
 </script>
 </body>
 </html>
