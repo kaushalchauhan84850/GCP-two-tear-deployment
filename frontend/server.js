@@ -36,6 +36,17 @@ app.get('/api/students', async (req, res) => {
   }
 });
 
+app.delete('/api/students/:id', async (req, res) => {
+  try {
+    const response = await axios.delete(`${BACKEND_URL}/students/${req.params.id}`);
+    res.json(response.data);
+  } catch (err) {
+    console.error('Error contacting backend:', err.message);
+    const status = err.response?.status || 502;
+    res.status(status).json({ error: 'Could not delete record' });
+  }
+});
+
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Frontend server listening on port ${PORT}`);
   console.log(`Forwarding API calls to backend at ${BACKEND_URL}`);
