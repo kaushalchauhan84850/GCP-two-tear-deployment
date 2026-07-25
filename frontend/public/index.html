@@ -30,11 +30,11 @@
     color: var(--ink);
     background-color: var(--court);
     background-image:
-      linear-gradient(rgba(7,59,38,0.55), rgba(7,59,38,0.75)),
-      repeating-linear-gradient(0deg, transparent 0 118px, var(--line-white) 118px 120px),
-      repeating-linear-gradient(90deg, transparent 0 118px, var(--line-white) 118px 120px);
-    background-size: cover, 100% 100%, 100% 100%;
-    background-attachment: fixed;
+      linear-gradient(rgba(7,59,38,0.6), rgba(7,59,38,0.78)),
+      url('/assets/racket-pattern.svg');
+    background-size: cover, 240px 240px;
+    background-repeat: no-repeat, repeat;
+    background-attachment: fixed, fixed;
     position: relative;
   }
 
@@ -234,6 +234,23 @@
   .modal.login-modal .field { margin-bottom: 14px; }
   #loginError { color: var(--danger); font-size: 13px; margin-top: 8px; min-height: 16px; }
 
+  .password-wrap { position: relative; }
+  .password-wrap input { padding-right: 42px; }
+  .eye-toggle {
+    position: absolute;
+    right: 4px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 17px;
+    padding: 6px 8px;
+    color: var(--muted);
+    line-height: 1;
+  }
+  .eye-toggle:hover { color: var(--ink); }
+
   .modal-actions { display: flex; gap: 10px; }
   .btn-secondary {
     background: #eef1ef; color: var(--ink); flex: 1;
@@ -386,7 +403,7 @@
         </div>
         <div class="field">
           <label for="phone">Phone</label>
-          <input id="phone" name="phone" type="text" placeholder="10-digit number" required />
+          <input id="phone" name="phone" type="tel" placeholder="10-digit number" pattern="[0-9]{10}" maxlength="10" inputmode="numeric" title="Enter a 10-digit mobile number" required />
         </div>
       </div>
       <div class="field">
@@ -402,7 +419,7 @@
         </div>
         <div class="field">
           <label for="guardianPhone">Guardian phone</label>
-          <input id="guardianPhone" name="guardianPhone" type="text" placeholder="10-digit number" required />
+          <input id="guardianPhone" name="guardianPhone" type="tel" placeholder="10-digit number" pattern="[0-9]{10}" maxlength="10" inputmode="numeric" title="Enter a 10-digit mobile number" required />
         </div>
       </div>
 
@@ -446,7 +463,10 @@
       </div>
       <div class="field">
         <label for="loginPassword">Password</label>
-        <input id="loginPassword" name="password" type="password" required autocomplete="current-password" />
+        <div class="password-wrap">
+          <input id="loginPassword" name="password" type="password" required autocomplete="current-password" />
+          <button type="button" class="eye-toggle" id="togglePassword" aria-label="Show password">👁</button>
+        </div>
       </div>
       <div id="loginError"></div>
       <div class="modal-actions" style="margin-top:6px;">
@@ -478,11 +498,11 @@
       </div>
       <div class="grid2">
         <div class="field"><label>Email</label><input name="email" type="email" required /></div>
-        <div class="field"><label>Phone</label><input name="phone" required /></div>
+        <div class="field"><label>Phone</label><input name="phone" type="tel" pattern="[0-9]{10}" maxlength="10" inputmode="numeric" title="Enter a 10-digit mobile number" required /></div>
       </div>
       <div class="grid2">
         <div class="field"><label>Guardian name</label><input name="guardianName" required /></div>
-        <div class="field"><label>Guardian phone</label><input name="guardianPhone" required /></div>
+        <div class="field"><label>Guardian phone</label><input name="guardianPhone" type="tel" pattern="[0-9]{10}" maxlength="10" inputmode="numeric" title="Enter a 10-digit mobile number" required /></div>
       </div>
       <div class="field">
         <label>Preferred batch</label>
@@ -793,6 +813,23 @@ editForm.addEventListener('submit', async (e) => {
 if (getToken()) {
   adminLoginBtn.textContent = 'Back to form';
 }
+
+/* ---------- Phone field: digits-only, max 10, as-you-type ---------- */
+document.querySelectorAll('input[type="tel"]').forEach((input) => {
+  input.addEventListener('input', () => {
+    input.value = input.value.replace(/\D/g, '').slice(0, 10);
+  });
+});
+
+/* ---------- Password show/hide toggle ---------- */
+const togglePassword = document.getElementById('togglePassword');
+const loginPasswordInput = document.getElementById('loginPassword');
+togglePassword.addEventListener('click', () => {
+  const isHidden = loginPasswordInput.type === 'password';
+  loginPasswordInput.type = isHidden ? 'text' : 'password';
+  togglePassword.textContent = isHidden ? '🙈' : '👁';
+  togglePassword.setAttribute('aria-label', isHidden ? 'Hide password' : 'Show password');
+});
 </script>
 </body>
 </html>

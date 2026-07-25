@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240">
+  <g stroke="#ffffff" stroke-width="2" fill="none" opacity="0.10">
+    <!-- Racket 1, tilted -->
+    <g transform="translate(40,40) rotate(-25)">
+      <ellipse cx="0" cy="0" rx="30" ry="38"/>
+      <line x1="-20" y1="-25" x2="-20" y2="25"/>
+      <line x1="-10" y1="-33" x2="-10" y2="33"/>
+      <line x1="0" y1="-38" x2="0" y2="38"/>
+      <line x1="10" y1="-33" x2="10" y2="33"/>
+      <line x1="20" y1="-25" x2="20" y2="25"/>
+      <line x1="-27" y1="-12" x2="27" y2="-12"/>
+      <line x1="-29" y1="0" x2="29" y2="0"/>
+      <line x1="-27" y1="12" x2="27" y2="12"/>
+      <line x1="0" y1="38" x2="0" y2="78" stroke-width="4"/>
+    </g>
+    <!-- Shuttlecock -->
+    <g transform="translate(170,60) rotate(15)">
+      <circle cx="0" cy="0" r="7"/>
+      <path d="M -7,-3 L -18,-26 M -3,-6 L -9,-30 M 3,-6 L 9,-30 M 7,-3 L 18,-26"/>
+      <path d="M -18,-26 L -9,-30 L 0,-28 L 9,-30 L 18,-26"/>
+    </g>
+    <!-- Racket 2, tilted other way -->
+    <g transform="translate(170,190) rotate(35)">
+      <ellipse cx="0" cy="0" rx="28" ry="36"/>
+      <line x1="-18" y1="-24" x2="-18" y2="24"/>
+      <line x1="-9" y1="-32" x2="-9" y2="32"/>
+      <line x1="0" y1="-36" x2="0" y2="36"/>
+      <line x1="9" y1="-32" x2="9" y2="32"/>
+      <line x1="18" y1="-24" x2="18" y2="24"/>
+      <line x1="-25" y1="-11" x2="25" y2="-11"/>
+      <line x1="-27" y1="0" x2="27" y2="0"/>
+      <line x1="-25" y1="11" x2="25" y2="11"/>
+      <line x1="0" y1="36" x2="0" y2="72" stroke-width="4"/>
+    </g>
+    <!-- Shuttlecock 2 -->
+    <g transform="translate(45,180) rotate(-40)">
+      <circle cx="0" cy="0" r="6"/>
+      <path d="M -6,-2 L -15,-22 M -2,-5 L -7,-26 M 2,-5 L 7,-26 M 6,-2 L 15,-22"/>
+      <path d="M -15,-22 L -7,-26 L 0,-24 L 7,-26 L 15,-22"/>
+    </g>
+  </g>
+</svg>
